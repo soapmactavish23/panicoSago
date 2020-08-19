@@ -13,8 +13,12 @@
 -- Copiando estrutura para tabela panic_sago.alerta
 CREATE TABLE IF NOT EXISTS `alerta` (
   `idalerta` int(11) NOT NULL AUTO_INCREMENT,
-  `latitude` double NOT NULL DEFAULT '0',
-  `longitude` double NOT NULL DEFAULT '0',
+  `idcliente` int(11) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(50) NOT NULL,
+  `dt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idalerta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -29,7 +33,6 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `senha` varchar(50) NOT NULL,
   `cpf` varchar(15) NOT NULL,
   `contato` varchar(20) NOT NULL,
-  `foto` longblob,
   `dt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idcliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

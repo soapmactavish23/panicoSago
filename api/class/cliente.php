@@ -2,11 +2,11 @@
 
 class cliente extends database {
 	
-	public function autenticar ($login, $password) {
+	public function autenticar ($login, $senha) {
 		$login = addslashes($login);
-		$password = addslashes($password);
+		$senha = addslashes($senha);
 		$sql = "SELECT idcliente, nome, foto FROM cliente
-		WHERE binary email='$login' and binary senha='".md5($password)."' 
+		WHERE binary email='$login' and binary senha='".md5($senha)."' 
 		LIMIT 1";
 		if ( $rs = parent::fetch_all($sql) ) {
 			$row = array_shift($rs);
@@ -95,7 +95,7 @@ class cliente extends database {
 			$this->update();
 			return array ( 'idcliente' => $this->idcliente, 'msg' => "Usuário Atualizado com Sucesso");
 		} else {
-			$this->senha = md5($_REQUEST['password']);
+			$this->senha = md5($_REQUEST['senha']);
 			$this->idcliente = $this->insert();
 			return array ( 'idcliente' => $this->idcliente, 'msg' => "Usuário Cadastrado com Sucesso");
 		}
