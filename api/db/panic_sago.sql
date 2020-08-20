@@ -14,10 +14,11 @@
 CREATE TABLE IF NOT EXISTS `alerta` (
   `idalerta` int(11) NOT NULL AUTO_INCREMENT,
   `idcliente` int(11) NOT NULL,
+  `idusuario` int(11) DEFAULT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'AGUARDANDO',
   `dt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idalerta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
