@@ -7,7 +7,7 @@ class cliente extends database
 	{
 		$login = addslashes($login);
 		$senha = addslashes($senha);
-		$sql = "SELECT idcliente, nome, foto FROM cliente
+		$sql = "SELECT idcliente, nome FROM cliente
 		WHERE binary email='$login' and binary senha='" . md5($senha) . "' 
 		LIMIT 1";
 		if ($rs = parent::fetch_all($sql)) {
