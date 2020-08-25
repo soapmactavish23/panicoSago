@@ -53,7 +53,7 @@ class alerta extends database {
 		global $_user;
 		// variaveis da denuncia
 		$this->idcliente = $_user->idcliente;
-		$this->nome = addslashes(@ $_REQUEST['nome']);
+		$this->nome = $_user->nome;
 		$this->latitude = (@ $_REQUEST['latitude']);
 		$this->longitude = (@ $_REQUEST['longitude']);
 		$this->dt_registro = (@ $_REQUEST['dt_registro']);
