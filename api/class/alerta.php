@@ -56,15 +56,19 @@ class alerta extends database {
 		$this->latitude = (@ $_REQUEST['latitude']);
 		$this->longitude = (@ $_REQUEST['longitude']);
 		$this->dt_registro = (@ $_REQUEST['dt_registro']);
-
-		$sql = "SELECT * FROM alerta WHERE idcliente = 1 AND status = 'AGUARDANDO'";
-		if(parent::fetch_all(($sql))){
-			return array ('error' => 'AGUARDE VIATURA A CAMINHO');
-		}else{
-			// grava alerta
-			$this->idalerta = $this->insert();
-			return array ( 'idalerta' => $this->idalerta );
-		}
+		// grava alerta
+		$this->idalerta = $this->insert();
+		return array ( 'idalerta' => $this->idalerta );
+		
+		// $sql = "SELECT * FROM alerta WHERE idcliente = 1 AND status = 'AGUARDANDO'";
+		// if(parent::fetch_all(($sql))){
+		// 	$this->update();
+		// 	return array ('error' => 'AGUARDE VIATURA A CAMINHO');
+		// }else{
+		// 	// grava alerta
+		// 	$this->idalerta = $this->insert();
+		// 	return array ( 'idalerta' => $this->idalerta );
+		// }
 	}
 
 }
