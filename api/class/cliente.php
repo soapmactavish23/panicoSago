@@ -13,8 +13,10 @@ class cliente extends database
 		if ($rs = parent::fetch_all($sql)) {
 			$row = array_shift($rs);
 			$this->saveLog('Entrou', $row['idcliente']);
-			$rows['token_cliente'] = createJWT ($row, 36000);
-			return $rows;
+
+			return array('idcliente' => $row['idcliente'], 'nome' => $row=['nome'], 'email' => $row['email']);
+			//$rows['token_cliente'] = createJWT ($row, 36000);
+			//return $rows;
 		}
 	}
 

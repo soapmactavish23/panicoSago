@@ -50,25 +50,15 @@ class alerta extends database {
 	}
 
 	public function salvar() {
-		global $_user;
 		// variaveis da denuncia
-		$this->idcliente = $_user->idcliente;
+		$this->idcliente = $_REQUEST['idcliente'];
 		$this->latitude = (@ $_REQUEST['latitude']);
 		$this->longitude = (@ $_REQUEST['longitude']);
 		$this->dt_registro = (@ $_REQUEST['dt_registro']);
 		// grava alerta
 		$this->idalerta = $this->insert();
 		return array ( 'idalerta' => $this->idalerta );
-		
-		// $sql = "SELECT * FROM alerta WHERE idcliente = 1 AND status = 'AGUARDANDO'";
-		// if(parent::fetch_all(($sql))){
-		// 	$this->update();
-		// 	return array ('error' => 'AGUARDE VIATURA A CAMINHO');
-		// }else{
-		// 	// grava alerta
-		// 	$this->idalerta = $this->insert();
-		// 	return array ( 'idalerta' => $this->idalerta );
-		// }
+
 	}
 
 }
