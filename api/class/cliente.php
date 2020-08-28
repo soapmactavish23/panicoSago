@@ -60,7 +60,7 @@ class cliente extends database
 		$this->cpf = $_REQUEST['cpf'];
 		
 		$sql = "SELECT cpf, email, contato FROM cliente 
-		WHERE cpf = ".$this->cpf." OR email = ".$this->email." OR contato = ".$this->contato;
+		WHERE cpf = '".$this->cpf."' OR email = '".$this->email."' OR contato = '".$this->contato."'";
 		if($rs = parent::fetch_all($sql)){
 			return array('error' => "Usuario já Cadastrado");
 		}else{
