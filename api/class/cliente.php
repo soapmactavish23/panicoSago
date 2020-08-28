@@ -55,24 +55,17 @@ class cliente extends database
 		$this->idcliente = @ $_REQUEST['idcliente'];
 		$this->nome = $_REQUEST['nome'];
 		$this->email = $_REQUEST['email'];
-		$this->senha = $_REQUEST['senha'];
+		$this->senha = md5($_REQUEST['senha']);
 		$this->contato = $_REQUEST['contato'];
 		$this->cpf = $_REQUEST['cpf'];
 		
 		$sql = "SELECT cpf, email, contato FROM cliente 
-		WHERE cpf = $this->cpf OR email = $this->email OR contato = $this->contato";
-		
+		WHERE cpf = ".$this->cpf." OR email = ".$this->email." OR contato = ".$this->contato;
 		if($rs = parent::fetch_all($sql)){
 			return array('error' => "Usuario já Cadastrado");
 		}else{
-			if ($this->idcliente) {
-				$this->dt_update = date('Y-m-d H:i:s');
-				$this->update();
-				return array('idcliente' => $this->idcliente, 'success' => "Usuario Atualizado com Sucesso");
-			} else {
-				$this->idcliente = $this->insert();
-				return array('idcliente' => $this->idcliente, 'success' => "Usuario Cadastrado com Sucesso");
-			}
+			$this->idcliente = $this->insert();
+			return array('idcliente' => $this->idcliente, 'success' => "Usuario Cadastrado com Sucesso");
 		}
 	}
 
