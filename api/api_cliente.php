@@ -13,19 +13,15 @@ if ( $classe = @ $_REQUEST['classe'] ) {
 	$_object = new $classe();
 
 	if ( $_token = validateJWT( @ $_REQUEST['token'] ) ) {
-		if ( $_token->exp > time() ) {
-			if ( $metodo = @ $_REQUEST['metodo'] ) {
-				$_user = json_decode($_token->data);
-				if ( $rs = @ $_object->$metodo() ) {
-					$_RESPONSE = $rs;
-				} else {
-					$_RESPONSE['error'] = 'Nenhum resultado encontrado';
-				}
+		if ( $metodo = @ $_REQUEST['metodo'] ) {
+			$_user = json_decode($_token->data);
+			if ( $rs = @ $_object->$metodo() ) {
+				$_RESPONSE = $rs;
 			} else {
-				$_RESPONSE['error'] = 'Nenhum METODO requerido';
+				$_RESPONSE['error'] = 'Nenhum resultado encontrado';
 			}
 		} else {
-			$_RESPONSE['error'] = 'Token expirado';
+			$_RESPONSE['error'] = 'Nenhum METODO requerido';
 		}
 	} else {
 		$_RESPONSE['error'] = 'Token invalido';
@@ -37,4 +33,3 @@ if ( $classe = @ $_REQUEST['classe'] ) {
 # retorno no formato json
 header("Content-Type: application/json; charset=utf-8", true);
 print json_encode( @ $_RESPONSE );
-?>

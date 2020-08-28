@@ -7,13 +7,13 @@ class cliente extends database
 	{
 		$login = addslashes($login);
 		$senha = addslashes($senha);
-		$sql = "SELECT idcliente, nome FROM cliente
+		$sql = "SELECT idcliente, nome, email FROM cliente
 		WHERE binary email='$login' and binary senha='" . md5($senha) . "' 
 		LIMIT 1";
 		if ($rs = parent::fetch_all($sql)) {
 			$row = array_shift($rs);
 			$this->saveLog('Entrou', $row['idcliente']);
-			$rows['token_cliente'] = createJWT($row);
+			$rows['token_cliente'] = createJWT ($row, 36000);
 			return $rows;
 		}
 	}
@@ -50,61 +50,26 @@ class cliente extends database
 		}
 	}
 
-	public function obterHistoricoCortes()
-	{
-		global $_user;
-		$sql = "SELECT idagenda, nome, preco, data, status  FROM agenda a
-		INNER JOIN corte c
-		ON c.idcorte = a.idcorte
-		WHERE idcliente = " . $_user->idcliente;
-		if ($rs = parent::fetch_all($sql)) {
-			foreach ($rs as $row) {
-				$col = array();
-				foreach ($row as $k => $v) {
-					$col[$k] = stripslashes($v);
-				}
-				$rows[] = $col;
-			}
-			return array('data' => $rows);
-		}
-	}
-
-	public function obterHistoricoBarbeiros()
-	{
-		global $_user;
-		$sql = "SELECT foto, nome, contato, COUNT(*) as total FROM agenda a
-		INNER JOIN usuario u
-		ON a.idusuario = u.idusuario
-		WHERE a.idcliente = " . $_user->idcliente . "
-		group by nome";
-		if ($rs = parent::fetch_all($sql)) {
-			foreach ($rs as $row) {
-				$col = array();
-				foreach ($row as $k => $v) {
-					$col[$k] = stripslashes($v);
-				}
-				$rows[] = $col;
-			}
-			return array('data' => $rows);
-		}
-	}
-
 	public function salvar()
 	{
-		$this->idcliente = @$_REQUEST['idcliente'];
+		$this->idcliente = @ $_REQUEST['idcliente'];
 		$this->nome = $_REQUEST['nome'];
 		$this->email = $_REQUEST['email'];
+		$this->senha = $_REQUEST['senha'];
 		$this->contato = $_REQUEST['contato'];
 		$this->cpf = $_REQUEST['cpf'];
 		
-		if ($this->idcliente) {
-			$this->dt_update = date('Y-m-d H:i:s');
-			$this->update();
-			return array('idcliente' => $this->idcliente, 'msg' => "Usuario Atualizado com Sucesso");
-		} else {
-			$this->senha = md5($_REQUEST['senha']);
-			$this->idcliente = $this->insert();
-			return array('idcliente' => $this->idcliente, 'msg' => "Usuario Cadastrado com Sucesso");
+		if($this->cpf || $this->email || $this->contato){
+			return array('error' => "Usuario já Cadastrado");
+		}else{
+			if ($this->idcliente) {
+				$this->dt_update = date('Y-m-d H:i:s');
+				$this->update();
+				return array('idcliente' => $this->idcliente, 'success' => "Usuario Atualizado com Sucesso");
+			} else {
+				$this->idcliente = $this->insert();
+				return array('idcliente' => $this->idcliente, 'success' => "Usuario Cadastrado com Sucesso");
+			}
 		}
 	}
 
