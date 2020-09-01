@@ -13,7 +13,9 @@ class cliente extends database
 		if ($rs = parent::fetch_all($sql)) {
 			$row = array_shift($rs);
 			$this->saveLog('Entrou', $row['idcliente']);
-			return array('idcliente' => $row['idcliente']);
+			return array('idcliente' => $row['idcliente'], 'success' => "Bem Vindo! " + $row['nome']);
+		}else{
+			return array('error' => "Usuário ou Senha Incorretos");
 		}
 	}
 
