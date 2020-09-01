@@ -5,7 +5,7 @@ header('Access-Control-Allow-Methods: POST');
 # carrega as configuraçoes iniciais
 require_once "config.php";
 
-# inclui a classe
+# inclui a classe 
 require_once "class/alerta.php";
 
 # instancia o objeto
