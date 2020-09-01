@@ -5,7 +5,7 @@ header('Access-Control-Allow-Methods: POST');
 # carrega as configuraçoes iniciais
 require_once "config.php";
 
-if($idcliente = $_REQUEST['idCliente']){
+if($idcliente = $_REQUEST['idcliente']){
 	if ($classe = @$_REQUEST['classe']) {
 		# carrega classe
 		require_once "class/$classe.php";
